@@ -53,6 +53,7 @@ The system log data that is collected by systemd-journald and it can contain eve
 
 A command used to view and search logs stored in the systemd journal and it can be used to inspect SSH-related events recorded on the server.
 
+```text
 Someone attempts SSH login
             |
             |
@@ -74,3 +75,5 @@ Someone attempts SSH login
                                                                             |
                                                                             |
                                                                             |---> Journal stores logs
+```
+                                                                        
