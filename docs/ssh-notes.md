@@ -76,4 +76,52 @@ Someone attempts SSH login
                                                                             |
                                                                             |---> Journal stores logs
 ```
-                                                                        
+                                                                        ## SSH Log Investigation
+
+I connected to the Ubuntu VM from my Windows computer using SSH and I confirmed that the SSH service was running using `systemctl status ssh`.
+
+I viewed SSH-related journal entries using: `journalctl -u ssh`
+
+A successful authentication event looked like:
+
+`Accepted password for jenushan from 192.168.68.102 port 62242 ssh2`
+
+A failed authentication event looked like:
+
+`Failed password for jenushan from 192.168.68.102 port 56682 ssh2`
+
+From these events, the SSH analyzer will eventually need to extract:
+- Authentication result
+- Username
+- Source IP address
+- Timestamp
+
+## Commands Used
+
+### `ip addr`
+
+Displays the network interfaces and IP addresses on the Linux system.
+
+I used this to find the IPv4 address of my Ubuntu VM. The `ens18` interface showed the VM's local network address.
+
+### `ssh username@server-ip`
+
+Starts an SSH connection from the client machine to the specified server.
+
+- `ssh` runs the SSH client program.
+- `username` is the user account I want to authenticate as.
+- `server-ip` is the IP address of the remote machine.
+
+### `systemctl status ssh`
+
+Checks the current status of the SSH service managed by systemd and I used this to confirm that the SSH service was active and that `sshd` was running.
+
+### `journalctl -u ssh`
+
+Displays journal entries associated with the SSH systemd unit.
+
+- `journalctl` is used to query the systemd journal.
+- `-u` filters the results by a systemd unit.
+- `ssh` specifies the SSH unit.
+
+I used this to view successful and failed SSH authentication activity.
