@@ -1,3 +1,7 @@
 Server listening on 0.0.0.0 port 22.
 Accepted password for jenushan from 192.168.68.102 port 62242 ssh2
 Failed password for jenushan from 192.168.68.102 port 56682 ssh2
+Failed password for admin from 192.168.68.150 port 50001 ssh2
+Server listening on 0.0.0.0 port 22.
+Failed password
+Accepted

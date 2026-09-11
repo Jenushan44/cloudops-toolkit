@@ -12,6 +12,12 @@ def parse_ssh_logs(file_path):
       if words[0] != "Accepted" and words[0] != "Failed": 
         continue
 
+      if "for" not in words: 
+        continue 
+
+      if "from" not in words: 
+        continue 
+      
       username_index = words.index("for")
       username = words[username_index + 1]
     
@@ -22,5 +28,3 @@ def parse_ssh_logs(file_path):
       results.append(result)
 
     return results
-
-print(parse_ssh_logs("tests/sample_ssh_logs.txt"))
