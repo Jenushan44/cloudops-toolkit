@@ -2,7 +2,7 @@ from parser import parse_ssh_logs
 
 events = parse_ssh_logs("tests/sample_ssh_logs.txt")
 
-def analyze_ssh_logs(events): 
+def analyze_ssh_logs(events, threshold = 5): 
 
   ip_dict = {}
   accepted_count = 0
@@ -20,10 +20,17 @@ def analyze_ssh_logs(events):
     if parsed_result['ip'] in ip_dict: 
       if parsed_result['result']  == 'Failed': 
         ip_dict[parsed_result['ip']]['failed'] += 1
-        ip_dict[parsed_result['ip']]['usernames'].append(parsed_result['username'])
+        ip_dict[parsed_result['ip']]['usernames'].add(parsed_result['username'])
     else: 
       if parsed_result['result'] == 'Failed':
-        ip_dict[parsed_result['ip']] = {"failed": 1, "usernames": [parsed_result['username']]}               
+        ip_dict[parsed_result['ip']] = {"failed": 1, "usernames": {parsed_result['username']}}               
+
+  for ip in ip_dict: 
+    if ip_dict[ip]['failed'] >= threshold: 
+      ip_dict[ip]['suspicious'] = True  
+    else: 
+      ip_dict[ip]['suspicious'] = False  
+  
 
   return accepted_count, failed_count, ip_dict
 
